@@ -1,0 +1,64 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: CloudFormation Template for API Gateway with Lambda Integration
+
+Resources:
+  MyApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: resume_aws_api
+
+  ApiResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId: !GetAtt MyApi.RootResourceId
+      PathPart: resumeaws
+      RestApiId: !Ref MyApi
+
+  ApiMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      AuthorizationType: NONE
+      HttpMethod: GET
+      ResourceId: !Ref ApiResource
+      RestApiId: !Ref MyApi
+
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.handler
+      Role: arn:aws:iam::YOUR_ACCOUNT_ID:role/your-lambda-execution-role
+      FunctionName: resume-lambda-function
+      Runtime: nodejs14.x
+      S3Bucket: robudexdevopsbucket
+      S3Key: index.js.zip  # Assuming your code is in a zip file named index.js.zip
+      Environment:
+        Variables:
+          DYNAMODB_TABLE_NAME: your-dynamodb-table-name
+
+  ApiLambdaIntegration:
+    Type: AWS::ApiGateway::Integration
+    Properties:
+      HttpMethod: GET
+      ResourceId: !Ref ApiResource
+      RestApiId: !Ref MyApi
+      IntegrationHttpMethod: POST
+      Type: AWS_PROXY
+      Uri: !Sub
+        - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaFunction.Arn}/invocations
+        - LambdaFunctionArn: !GetAtt LambdaFunction.Arn
+
+  ApiLambdaIntegrationResponse:
+    Type: AWS::ApiGateway::IntegrationResponse
+    Properties:
+      HttpMethod: GET
+      ResourceId: !Ref ApiResource
+      RestApiId: !Ref MyApi
+      StatusCode: 200
+      ResponseParameters:
+        method.response.header.Access-Control-Allow-Origin: "'*'"
+        method.response.header.Access-Control-Allow-Headers: "'Authorization,Content-Type,Allow-Access-Origin'"
+
+Outputs:
+  ApiGatewayUrl:
+    Description: URL of the API Gateway
+    Value: !Sub "https://${MyApi}.execute-api.${AWS::Region}.amazonaws.com/staging/"

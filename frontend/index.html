@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rogmer Bulaclac - Resume</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+        }
+
+        header {
+            background-color: #800080; /* Dark Purple */
+            color: #fff;
+            text-align: center;
+            padding: 20px 20px;
+        }
+
+        header img {
+            width: 120px; /* Adjust the width as needed */
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: #fff;
+        }
+
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .projects, .certifications {
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.5;
+            color: #555;
+        }
+        .p-header {
+            color: #fff;
+        }
+
+        #visitorCount {
+        background: linear-gradient(45deg, yellow, green);
+        -webkit-background-clip: text;
+        color: transparent;
+        font-weight: bold;
+     }
+    </style>
+</head>
+<body>
+    <header>
+        <header>
+            <img src="myresume_photos.jpg" alt="Your Photo">
+            <h1>Rogmer Bulaclac</h1>
+            <p class="p-header">Sr Network Administrator | VOIP Network Engineer</p>
+            <div id="visitorCount"></div>
+        </header>
+    </header>
+
+    <section>
+        <h2>Professional Summary</h2>
+        <p> Network Admin/VOIP Engineer turned DevOps enthusiast. Created an Asterisk CDR logs app with PHP, Node.js, APIs, and databases. Passionate about the DevOps synergy between Operations and Development. Skilled in Linux, Asterisk VOIP, AWS, and Python. Actively learning Docker, Kubernetes, Ansible, Git, and Terraform for future contributions as a DevOps Engineer.</p>
+
+
+
+
+    </p>
+
+        <h2>Skills</h2>
+        <ul>
+            <li>AWS</li>
+            <li>Linux Administration</li>
+            <li>Asterisk</li>
+            <li>Python</li>
+            <li>Javascript/Node.js</li>
+            <li>DevOps</li>
+            <li>Bash Scripting</li>
+        </ul>
+
+        <h2>Projects</h2>
+        <ul class="projects">
+            <li>Create and Build Asterisk Servers</li>
+            <li>Build WebApp to Monitor Staff CDR. Using Vue.js as Frontend and PHP as Backup</li>
+            <li>Build a Project to automatically create a Backup Asterisk Server on AWS during outage</li>
+        </ul>
+
+        <h2>Certifications</h2>
+        <ul class="certifications">
+            <li>AWS Certified Solution Architect - Associate</li>
+            <li>AWS Developer Associate</li>
+        </ul>
+    </section>
+    
+
+  
+
+
+    <script>
+        // Function to fetch and display visitor count
+        async function fetchVisitorCount() {
+            try {
+                const response = await fetch('https://y8s5rfhaja.execute-api.us-east-1.amazonaws.com/staging/resume-api');
+                const data = await response.json();
+                console.log(data)  
+                document.getElementById('visitorCount').innerHTML = `Number of unique visitors: ${data}`;
+            } catch (error) {
+                console.error('Error fetching visitor count:', error);
+            }
+        }
+
+        // Call the function when the page is loaded
+        window.onload = fetchVisitorCount;
+
+        
+    </script>
+</body>
+</html>

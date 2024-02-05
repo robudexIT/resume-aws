@@ -1,0 +1,5 @@
+backend/backendenv/*
+**/.terraform/*
+**/__pycache__/ 
+**/.terraform*
+**/terraform.tfstate*
