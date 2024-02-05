@@ -78,7 +78,7 @@ resource "aws_lambda_function" "resume_lambda" {
   runtime       = "python3.9" # Change the runtime based on your Lambda function
   # s3_bucket     = "robudexdevopsbucket" # Change this to your S3 bucket name
   # s3_key        = "resumeaws/index.zip"  # Change this to the actual path
-  filename = "/home/robudex/SBTPHPROJECTS/resume-aws/resume-aws-backend/lambda_code/index-2024-02-05_05-33-27.zip"
+  filename = "../../backend/lambda_code/${var.lambda_code_file}"
 
 
   role       = aws_iam_role.lambda_execution_role.arn

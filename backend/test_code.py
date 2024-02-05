@@ -1,5 +1,6 @@
-from lambda_code import index
 import pytest
+from .lambda_code import index
+
 
 event = {
     "requestContext": {
@@ -11,7 +12,9 @@ event = {
 
 context = ""
 
-
+def test_dbname():
+   assert index.table_name == "resume_visitor" 
+   
 def test_lamba_return_success():
     result = index.lambda_handler(event, context)
     print("Stattus code:")
