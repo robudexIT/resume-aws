@@ -37,3 +37,55 @@ jobs:
         run:  |
           cd backend
           pytest
+      - name: packaging code 
+        run: |
+          cd backend/lambda_code  
+          timestamp=$(date "+%Y-%m-%d_%H-%M-%S")
+          zip index-${timestamp}.zip index.py
+          echo "lambda_code_file = \"index-${timestamp}.zip\"" > ../terraform/terraform.tfvars 
+          
+
+  deploy-terraform: 
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Checkout code 
+        uses: actions/checkout@v4
+
+      - name: Setup Terrform 
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Setup AWS CLI 
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Replace with your AWS region   
+              
+      - name: Terraform Init 
+        id: init 
+        run: | 
+          cd backend/terraform 
+          terraform init 
+
+      - name: Terraform Format 
+        id: fmt 
+        run: |
+          cd backend/terraform
+          terraform fmt 
+      - name: Terraform Validate 
+        id: Validate 
+        run: |
+          cd backend/terraform 
+          terraform validate 
+
+      - name: Terraform Plan 
+        id: plan 
+        run: | 
+          cd backend/terraform 
+          terraform plan -var-file="terraform.tfvars"
+      - name: Terraform Apply 
+        id: apply 
+        run: |
+          cd backend/terraform 
+          terraform apply -var-file="terraform.tfvars"
