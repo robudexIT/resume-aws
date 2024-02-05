@@ -37,12 +37,7 @@ jobs:
         run:  |
           cd backend
           pytest
-      - name: packaging code 
-        run: |
-          cd backend/lambda_code  
-          timestamp=$(date "+%Y-%m-%d_%H-%M-%S")
-          zip index-${timestamp}.zip index.py
-          echo "lambda_code_file = \"index-${timestamp}.zip\"" > ../terraform/terraform.tfvars 
+
           
 
   deploy-terraform: 
@@ -51,7 +46,14 @@ jobs:
     steps:
       - name: Checkout code 
         uses: actions/checkout@v4
-
+        
+      - name: packaging code 
+        run: |
+          cd backend/lambda_code  
+          timestamp=$(date "+%Y-%m-%d_%H-%M-%S")
+          zip index-${timestamp}.zip index.py
+          echo "lambda_code_file = \"index-${timestamp}.zip\"" > ../terraform/terraform.tfvars 
+          
       - name: Setup Terrform 
         uses: hashicorp/setup-terraform@v3
 
