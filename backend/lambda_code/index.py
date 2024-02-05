@@ -8,7 +8,8 @@ table = dynamodb.Table(table_name)
 
 
 def displayname():
-    print("Rogmer Delacruz Bulaclac")
+    print("Author:Rogmer Delacruz Bulaclac")
+    print("Position: Devops Engineer")
 
 def lambda_handler(event, context):
     
