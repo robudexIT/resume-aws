@@ -22,7 +22,7 @@ jobs:
           aws-region: us-east-1  # Replace with your AWS region
 
       - name: Set up Python 
-        uses: actions/setup-python@2
+        uses: actions/setup-python@3
         with:
           python-version: 3.9 
       
