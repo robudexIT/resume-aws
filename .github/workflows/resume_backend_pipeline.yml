@@ -2,7 +2,8 @@ name: resume-backend-pipeline
 
 on:
   push:
-    
+    paths:
+      - "backend/**"
     branches:
       - main
 

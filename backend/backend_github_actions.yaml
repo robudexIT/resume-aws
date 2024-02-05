@@ -2,6 +2,7 @@ name: resume-backend-pipeline
 
 on:
   push:
+    
     branches:
       - main
 
