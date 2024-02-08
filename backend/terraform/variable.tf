@@ -1,5 +1,5 @@
 variable "lambda_code_file" {
-    type = string 
-    default = "index.py"
+  type    = string
+  default = "index.py"
 }
 

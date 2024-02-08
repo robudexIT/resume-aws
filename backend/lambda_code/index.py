@@ -10,6 +10,10 @@ table = dynamodb.Table(table_name)
 def displayname():
     print("Author:Rogmer Delacruz Bulaclac")
     print("Position: Devops Engineer")
+    
+def displaycert():
+    print("AWS Developer Associate")
+    print ("AWS Solution Architect Associate")
 
 def lambda_handler(event, context):
     
